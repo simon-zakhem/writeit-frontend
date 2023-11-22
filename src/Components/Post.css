@@ -1,0 +1,250 @@
+div.post div.texts h2{
+    margin:0;
+    font-size: 2rem;
+}
+  
+div.post div.texts a{
+    text-decoration:none;
+    color: inherit;
+}
+  
+div.post p.info{
+    margin:24px 0;
+    color: #888;
+    font-size:1rem;
+    font-weight: bold;
+    display: flex;
+    gap: 10px;
+}
+  
+div.post p.info a.author{
+    color:#333;
+}
+  
+div.post p.summary{
+    margin:10px 0;
+    line-height: 1.8rem;
+}
+  
+form.login, form.register{
+    max-width: 400px;
+    margin: 0 auto;
+}
+  
+input{
+    display: block;
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 5px 7px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+  
+  button{
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    background-color: #555;
+    border:0;
+    color: #fff;
+    border-radius: 5px;
+    padding: 7px 0;
+  }
+  
+  form.login h1, form.register h1{
+    text-align: center;
+  }
+  
+  div.post-page div.image{
+    max-height:300px;
+    display: flex;
+    overflow:hidden;
+  }
+  
+  div.post-page div.image img{
+    object-fit: cover;
+    object-position: center center;
+    width: 100%;
+  }
+  
+  div.post-page a{
+    color:#333;
+    text-decoration: underline;
+  }
+  
+  div.post-page h1{
+    text-align: center;
+    margin: 10px 0 5px;
+  }
+  
+  div.post-page time{
+    text-align: center;
+    display: block;
+    font-size:1rem;
+    color:#888;
+    margin: 10px 0 0;
+  }
+  
+  div.post-page div.author{
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  div.content p{
+    line-height: 1.7rem;
+    margin: 30px 0;
+  }
+  
+  div.content li{
+    margin-bottom: 10px;
+  }
+  
+  div.edit-row{
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  div.post-page a.edit-btn{
+    background-color: #333;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
+    padding:15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  a svg{
+    height:20px;
+  }
+  
+  .auth-link{
+    font-weight: 500;
+  }
+  
+  .svg-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.comments {
+    margin-top: 20px;
+}
+
+.comment-box {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 2px 2px 5px #aaa;
+}
+
+.comment-box button{
+  border: 1px solid #ddd;
+  box-shadow: 2px 2px 5px #aaa;
+  background-color: rgb(240, 0, 0);
+  width: 30px;
+  height: 30px;
+  margin-left: 80%;
+}
+
+.like-section {
+  display: flex;
+  padding: 5px;
+}
+
+.like-section svg {
+  width: 30px;
+  height: 30px;
+  color: #333;
+}
+
+.like-section span{
+  font-size: larger;
+  padding: 5px;
+}
+
+.comment-box button svg{
+  margin-right: 1px;
+  vertical-align: bottom;
+  width: 20px;
+  height: 20px;
+  margin-top: -2.5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-content p {
+    margin: 0;
+}
+
+.comment-content strong {
+    font-weight: bold;
+}
+
+.comment-details {
+    text-align: right;
+}
+
+.comment-date {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.comment-input {
+    margin-top: 30px;
+}
+
+.materialUIButton {
+  border: 1px solid #ddd;
+  box-shadow: 2px 2px 5px #aaa;
+    display: inline-block;
+    width: 40%;
+    margin: 3px 1%;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .materialUIDeleteButton {
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 5px #aaa;
+    display: inline-block;
+    width: 40%;
+    margin: 3px 1%;
+    background-color: rgb(231, 0, 0);
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .materialUIButton svg, .materialUIDeleteButton svg {
+    margin-right: 5px;
+    vertical-align: bottom;
+  }
