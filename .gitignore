@@ -1,2 +1,15 @@
-/node_modules
-/DS_Store
+# Ignore node_modules
+node_modules/
+
+# Ignore environment variables
+.env
+
+# Ignore logs
+*.log
+
+# Ignore build directory
+build/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
