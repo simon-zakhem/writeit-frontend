@@ -1,29 +1,20 @@
-import {React, useEffect, useState} from "react";
-import Post from "../Components/Post";
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import Post from '../Components/Posts/Post';
 import '../HomeP.css';
-import SearchBar from "../Components/SearchBar";
+import '../Components/Posts/Post.css';
+import SearchBar from '../Components/Posts/SearchBar';
 import respng from '../img/no-result.png';
 import RiseLoader from 'react-spinners/RiseLoader';
+import homeService from '../Services/homeService';
 
-const HomePage = () =>{
-
+const HomePage = () => {
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await axios.get('http://localhost:3001/api/post/post');
-                setPosts(response.data.data);
-                setFilteredPosts(response.data.data);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-        fetchPosts();
+        homeService.fetchPosts(setPosts, setFilteredPosts, setLoading);
     }, []);
 
     const filterPosts = (query) => {

@@ -1,5 +1,5 @@
 import ReactQuill from "react-quill";
-import "../Components/edit.css";
+import "./edit.css";
 
 const EditorForm = ({value, onChange}) => {
 

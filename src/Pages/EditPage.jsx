@@ -1,4 +1,4 @@
-import Edit from "../Components/Edit";
+import Edit from "../Components/Editor/Edit";
 
 const EditPage = () => {
     return(

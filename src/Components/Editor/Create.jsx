@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import EditorForm from './EditorForm';
-import '../Components/edit.css';
+import './edit.css';
+import editorService from '../../Services/editorService';
 
 const Create = () => {
-
     const [title, setTitle] = useState('');
     const [summary, setSummary] = useState('');
     const [content, setContent] = useState('');
@@ -15,42 +13,27 @@ const Create = () => {
     const [redirect, setRedirect] = useState(false);
 
     const handleSummaryChange = (e) => {
-      const maxLength = 180;
-      const inputValue = e.target.value;
-      const truncatedValue = inputValue.length <= maxLength ? inputValue : inputValue.slice(0, maxLength);
-      setSummary(truncatedValue);
+        const maxLength = 180;
+        const inputValue = e.target.value;
+        const truncatedValue = inputValue.length <= maxLength ? inputValue : inputValue.slice(0, maxLength);
+        setSummary(truncatedValue);
     };
 
     const handleTitleChange = (e) => {
-      const maxLength = 60;
-      const inputValue = e.target.value;
-      const truncatedValue = inputValue.length <= maxLength ? inputValue : inputValue.slice(0, maxLength);
-      setTitle(truncatedValue);
+        const maxLength = 60;
+        const inputValue = e.target.value;
+        const truncatedValue = inputValue.length <= maxLength ? inputValue : inputValue.slice(0, maxLength);
+        setTitle(truncatedValue);
     };
 
     const createPost = async (ev) => {
         ev.preventDefault();
-    
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('summary', summary);
-        formData.append('content', content);
-        formData.append('file', files[0]);
-    
+
         try {
-          const response = await axios.post('http://localhost:3001/api/post/post', formData, {
-            withCredentials: true, // Include cookies in the request
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-        
-          if(response.status === 200){
+            await editorService.createPost({ title, summary, content, files });
             setRedirect(true);
-          }
         } catch (error) {
-          console.error('Axios error:', error);
-          // Handle the error as needed
+            console.error('Error creating post:', error);
         }
     };
 

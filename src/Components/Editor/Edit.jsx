@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
-import axios from 'axios';
 import { Navigate, useParams } from 'react-router-dom';
 import EditorForm from './EditorForm';
+import editorService from '../../Services/editorService';
 
 const Edit = () => {
-
     const [title, setTitle] = useState('');
     const [summary, setSummary] = useState('');
     const [content, setContent] = useState('');
@@ -15,54 +14,38 @@ const Edit = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchPostData = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/post/post/${id}`);
-                const postInfo = response.data.data;
+                const postInfo = await editorService.fetchData(id);
                 setTitle(postInfo.title);
                 setSummary(postInfo.summary);
                 setContent(postInfo.content);
             } catch (error) {
-                console.error('Axios error:', error);
-                // Handle the error as needed
+                console.error('Error fetching post data:', error);
             }
         };
 
-        fetchData();
+        fetchPostData();
     }, [id]);
 
-    const editPost = async (ev) => {
-        ev.preventDefault();
-    
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('summary', summary);
-        formData.append('content', content);
-        formData.append('id', id);
-        if (files?.[0]) {
-            formData.append('file', files?.[0]);
-        }
-    
-        try {
-            const response = await axios.put(`http://localhost:3001/api/post/post/${id}`, formData, {
-                withCredentials: true, // Include cookies with the request
-            });
-    
-            if (response.status === 200) { 
-                setRedirect(true);
-            }
-        } catch (error) {
-            console.error('Axios error:', error);
-            // Handle the error as needed
-        }
+    const handleEditPost = async (ev) => {
+      ev.preventDefault();
+  
+      try {
+          await editorService.editPost(id, title, summary, content, files);
+          setRedirect(true);
+      } catch (error) {
+          console.error('Error editing post:', error);
+      }
     };
+  
 
     if(redirect){
         return <Navigate to={`/post/${id}`}/>
     }
 
     return (
-        <form onSubmit={editPost} className="edit-form">
+        <form onSubmit={handleEditPost} className="edit-form">
           <label htmlFor="title" className="form-label">
           Title (Limit to 60 characters)
             <input

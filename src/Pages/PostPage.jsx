@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { formatISO9075 } from "date-fns";
-import axios from 'axios';
-import { UserContext } from "../Components/UserContext";
+import { UserContext } from "../Components/Profile/UserContext";
 import BeatLoader from "react-spinners/BeatLoader";
 import postService from "../Services/postService";
-import "../Components/Post.css";
+import "../Components/Posts/Post";
 
 const PostPage = () => {
 
@@ -33,57 +32,9 @@ const PostPage = () => {
         }
     };
 
-    const handleLikeClick = async () => {
-        try {
-            console.log(info)
-            const response = isLiked
-                ? await axios.post(`http://localhost:3001/api/post/post/${info._id}/unlike/`, {}, { withCredentials: true })
-                : await axios.post(`http://localhost:3001/api/post/post/${info._id}/like`, {}, { withCredentials: true });
-
-            if (response.status === 200) {
-                setIsLiked(!isLiked);
-                setInfo((prevInfo) => ({
-                    ...prevInfo,
-                    likes: isLiked ? prevInfo.likes - 1 : prevInfo.likes + 1,
-                }));
-            } else {
-                console.error('Failed to toggle like:', response.message);
-            }
-        } catch (error) {
-            console.error('Error toggling like:', error);
-        }
-    };  
-
-    // const submitComment = async () => {
-    //     try {
-    //         const response = await axios.post(`http://localhost:3001/api/comment/comment/${info._id}`, {
-    //             content: commentInput,
-    //             story: info._id,
-    //         }, {
-    //             withCredentials: true, // Send cookies with the request
-    //             headers: {
-    //               'Content-Type': 'application/json',
-    //             },
-    //         });
-
-    //         // Assuming the server responds with the new comment
-    //         const newComment = {
-    //             ...response.data.data,
-    //             postedBy: {
-    //                 username: userInfo?.result?.data?.username,
-    //                 // Add other user information if needed
-    //             },
-    //         };
-
-    //         // Update the state to include the new comment
-    //         setComments((prevComments) => [...prevComments, newComment]);
-
-    //         // Clear the comment input
-    //         setCommentInput('');
-    //     } catch (error) { 
-    //         console.error('Axios error:', error);
-    //     }
-    // };
+    const handleLikeClick = () => {
+        postService.handleLikeClick(info, isLiked, setIsLiked, setInfo);
+    };
 
     const submitComment = () => {
         postService.submitComment({
@@ -96,32 +47,14 @@ const PostPage = () => {
     };
 
     useEffect(() => {
-        const fetchInfo = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3001/api/post/post/${id}`, {
-                    withCredentials: true,
-                });
-                setInfo(response.data.data);
-
-                // Check if the current post is in the likedPosts array in the JWT payload
-                setIsLiked(response.data.data.isLiked);
-            } catch (error) {
-                console.error('Axios error:', error);
-                // Handle the error as needed
-            }
+        const fetchInfo = () => {
+            postService.fetchInfo(id, setInfo, setIsLiked);
+        };
+    
+        const fetchComments = () => {
+            postService.fetchComments(id, setComments);
         };
 
-        const fetchComments = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3001/api/comment/comment/${id}`);
-                setComments(response.data.data);
-            } catch (error) {
-                console.error('Axios error:', error);
-                // Handle the error as needed
-            }
-        };
-
-        // console.log(info)
         fetchInfo();
         fetchComments();
     }, [id]);
@@ -132,7 +65,8 @@ const PostPage = () => {
         </div>;
     }
 
-    const username = userInfo?.result?.data?.username;
+    // makes sure the username does not get deleted after page refresh
+    const username = userInfo?.result?.data?.username || userInfo?.username;
  
     return (
         <div>

@@ -153,6 +153,7 @@ input{
 }
 
 .comment-box button{
+  display: inline;
   border: 1px solid #ddd;
   box-shadow: 2px 2px 5px #aaa;
   background-color: rgb(240, 0, 0);

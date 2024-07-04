@@ -7,13 +7,12 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import backgroundImg from '../img/authBg.jpg';
-import Axios from 'axios';
+import backgroundImg from '../../img/authBg.jpg';
 import { Navigate } from 'react-router-dom';
-import { UserContext } from './UserContext';
+import { UserContext } from '../Profile/UserContext';
+import authService from '../../Services/authService';
 
 const defaultTheme = createTheme();
 
@@ -28,33 +27,21 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await Axios.post('http://localhost:3001/api/auth/register', {
-        username,
-        email,
-        password,
-      }, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (response.status === 200) {
-        const userInfo = response.data;
+      const userInfo = await authService.signup(username, email, password);
+
+      if (userInfo) {
         setRedirect(true);
         setUserInfo(userInfo);
       } else {
         alert('Username or Email already exist!');
       }
     } catch (error) {
-      console.error('Axios error:', error);
+      console.error('Error signing up:', error);
       if (error.response) {
-        // The request was made, but the server responded with an error status code
         console.error('Response data:', error.response.data);
         console.error('Response status:', error.response.status);
         console.error('Response headers:', error.response.headers);
       } else {
-        // Network error or other issues
         console.error('Error message:', error.message);
       }
     }
@@ -97,7 +84,7 @@ const Signup = () => {
               </svg>
             </Avatar>
             <Typography component="h1" variant="h5">
-              Signup
+              Register
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
@@ -136,7 +123,7 @@ const Signup = () => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2, backgroundColor:"#555" }}>
-                Signup
+                Register
               </Button>
                 <Grid item xs>
                 </Grid>

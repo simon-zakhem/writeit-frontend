@@ -1,4 +1,4 @@
-import Create from "../Components/Create";
+import Create from "../Components/Editor/Create";
 
 const CreatePage = () =>{
     return(

@@ -1,6 +1,6 @@
 import {React, useState, useEffect} from 'react';
 import {FaSearch} from 'react-icons/fa';
-import "./search.css"
+import "./search.css";
 
 const SearchBar = ({filterPosts}) => {
 
@@ -12,7 +12,7 @@ const SearchBar = ({filterPosts}) => {
 
     return(
         <div className="input-wrapper">
-            <FaSearch id='search-icon'/>
+            <FaSearch id='search-icon' style={{ transform: 'translateY(2px)' }} />
             <input placeholder="Search Posts Here..."
              value={searchQuery} 
              onChange={e => setSearchQuery(e.target.value)} />

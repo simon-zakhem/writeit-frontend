@@ -7,13 +7,12 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import backgroundImg from '../img/authBg.jpg';
+import backgroundImg from '../../img/authBg.jpg';
 import {Navigate} from 'react-router-dom';
-import Axios from 'axios';
-import { UserContext } from './UserContext';
+import { UserContext } from '../Profile/UserContext';
+import authService from '../../Services/authService';
 
 const defaultTheme = createTheme();
 
@@ -27,26 +26,16 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await Axios.post('http://localhost:3001/api/auth/login', {
-        username,
-        password,
-      }, {
-        withCredentials: true, // Send cookies with the request
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (response.status === 200) {
-        const userInfo = response.data;
+      const userInfo = await authService.login(username, password);
+
+      if (userInfo) {
         setUserInfo(userInfo);
         setRedirect(true);
       } else {
         alert('Wrong username/password');
       }
     } catch (error) {
-      console.error('Axios error:', error);
-      // Handle the error as needed
+      console.error('Error logging in:', error);
     }
   };
 
